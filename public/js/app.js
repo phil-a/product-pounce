@@ -19129,7 +19129,7 @@ var HomePage = function (_React$Component) {
 
 exports.default = HomePage;
 
-},{"../Product/ProductList":162,"react":158}],160:[function(require,module,exports){
+},{"../Product/ProductList":163,"react":158}],160:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -19150,43 +19150,34 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Navbar = function (_React$Component) {
-  _inherits(Navbar, _React$Component);
+var Popup = function (_React$Component) {
+  _inherits(Popup, _React$Component);
 
-  function Navbar() {
-    _classCallCheck(this, Navbar);
+  function Popup() {
+    _classCallCheck(this, Popup);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Navbar).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Popup).apply(this, arguments));
   }
 
-  _createClass(Navbar, [{
-    key: "renderProductSearch",
-    value: function renderProductSearch() {
+  _createClass(Popup, [{
+    key: "renderPopupContent",
+    value: function renderPopupContent() {
       return _react2.default.createElement(
         "section",
-        { className: "left-side" },
-        _react2.default.createElement("input", { className: "product-search", placeholder: "Search" })
-      );
-    }
-  }, {
-    key: "renderLogo",
-    value: function renderLogo() {
-      return _react2.default.createElement(
-        "a",
-        { href: "#" },
-        _react2.default.createElement("img", { src: "/img/favicon.ico" })
-      );
-    }
-  }, {
-    key: "renderUser",
-    value: function renderUser() {
-      return _react2.default.createElement(
-        "section",
-        { className: "right-side" },
+        { className: "popup" },
         _react2.default.createElement(
-          "a",
-          { href: "#", className: "login-btn" },
-          "Login"
+          "section",
+          { className: "popup-wrapper" },
+          _react2.default.createElement("img", { src: "/img/close.png", onClick: this.props.hidePopup })
+        ),
+        _react2.default.createElement(
+          "section",
+          { className: "popup-content" },
+          _react2.default.createElement(
+            "section",
+            null,
+            "Content is listed here."
+          )
         )
       );
     }
@@ -19196,13 +19187,108 @@ var Navbar = function (_React$Component) {
       return _react2.default.createElement(
         "section",
         null,
+        this.props.status ? this.renderPopupContent() : null
+      );
+    }
+  }]);
+
+  return Popup;
+}(_react2.default.Component);
+
+exports.default = Popup;
+
+},{"react":158}],161:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Popup = require('./Popup');
+
+var _Popup2 = _interopRequireDefault(_Popup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Navbar = function (_React$Component) {
+  _inherits(Navbar, _React$Component);
+
+  function Navbar() {
+    _classCallCheck(this, Navbar);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navbar).call(this));
+
+    _this.showPopup = function () {
+      _this.setState({ popupStatus: true });
+    };
+
+    _this.hidePopup = function () {
+      _this.setState({ popupStatus: false });
+    };
+
+    _this.state = {
+      popupStatus: false
+    };
+    return _this;
+  }
+
+  _createClass(Navbar, [{
+    key: 'renderProductSearch',
+    value: function renderProductSearch() {
+      return _react2.default.createElement(
+        'section',
+        { className: 'left-side' },
+        _react2.default.createElement('input', { className: 'product-search', placeholder: 'Search' })
+      );
+    }
+  }, {
+    key: 'renderLogo',
+    value: function renderLogo() {
+      return _react2.default.createElement(
+        'a',
+        { href: '#' },
+        _react2.default.createElement('img', { src: '/img/favicon.ico' })
+      );
+    }
+  }, {
+    key: 'renderUser',
+    value: function renderUser() {
+      return _react2.default.createElement(
+        'section',
+        { className: 'right-side' },
         _react2.default.createElement(
-          "section",
-          { className: "navbar" },
+          'a',
+          { href: '#', onClick: this.showPopup, className: 'login-btn' },
+          'Login'
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'section',
+        null,
+        _react2.default.createElement(
+          'section',
+          { className: 'navbar' },
           this.renderProductSearch(),
           this.renderLogo(),
           this.renderUser()
-        )
+        ),
+        _react2.default.createElement(_Popup2.default, { status: this.state.popupStatus, hidePopup: this.hidePopup })
       );
     }
   }]);
@@ -19212,7 +19298,7 @@ var Navbar = function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"react":158}],161:[function(require,module,exports){
+},{"./Popup":160,"react":158}],162:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -19315,7 +19401,7 @@ var ProductItem = function (_React$Component) {
 
 exports.default = ProductItem;
 
-},{"react":158}],162:[function(require,module,exports){
+},{"react":158}],163:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19369,7 +19455,7 @@ var ProductList = function (_React$Component) {
 
 exports.default = ProductList;
 
-},{"./ProductItem":161,"react":158}],163:[function(require,module,exports){
+},{"./ProductItem":162,"react":158}],164:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19424,4 +19510,4 @@ var App = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
-},{"./HomePage":159,"./Navbar":160,"react":158,"react-dom":29}]},{},[163]);
+},{"./HomePage":159,"./Navbar":161,"react":158,"react-dom":29}]},{},[164]);
