@@ -4,8 +4,8 @@ import Popup from './Popup';
 class LoginPopup extends React.Component {
   render() {
     return (
-      <Popup {...this.props}>
-        <img src ="/img/kitty.png"/>
+      <Popup {...this.props} style="login-popup">
+        <img src ="/img/kitty.png" />
         <h1>Login to Join the Community</h1>
         <p>Product Pounce is a community to share and geek out about the latest code, podcasts and news. Join us :)</p>
         <button className="facebook-btn">Login with Facebook</button>
@@ -16,4 +16,4 @@ class LoginPopup extends React.Component {
 
 }
 
-export default LoginPopup
+export default LoginPopup;
