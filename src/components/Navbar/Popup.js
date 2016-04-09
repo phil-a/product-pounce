@@ -7,9 +7,9 @@ class Popup extends React.Component {
         <section className="popup-wrapper">
           <img src="/img/close.png" onClick={this.props.hidePopup}/>
         </section>
-        <section className="popup-content">
+        <section className="popup-content login-popup">
           <section>
-            Content is listed here.
+            {this.props.children}
           </section>
         </section>
       </section>

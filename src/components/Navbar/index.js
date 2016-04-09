@@ -1,6 +1,5 @@
 import React from 'react';
-import Popup from './Popup';
-
+import LoginPopup from './LoginPopup'
 class Navbar extends React.Component {
   constructor() {
     super();
@@ -45,7 +44,7 @@ class Navbar extends React.Component {
           {this.renderLogo()}
           {this.renderUser()}
         </section>
-        <Popup status={this.state.popupStatus} hidePopup={this.hidePopup}/>
+        <LoginPopup status={this.state.popupStatus} hidePopup={this.hidePopup}/>
       </section>
     );
   }
