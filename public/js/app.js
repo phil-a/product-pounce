@@ -19841,20 +19841,78 @@ var ProductPopup = function (_React$Component) {
   function ProductPopup() {
     _classCallCheck(this, ProductPopup);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ProductPopup).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ProductPopup).call(this));
+
+    _this.state = {
+      product: {
+        id: 1,
+        name: "CodeLoads",
+        link: "https://codeloads.com",
+        media: "/img/codeacademy.jpeg",
+        upvote: 169,
+        description: "A load of code",
+        maker: {
+          name: 'phil',
+          avatar: '/img/phil.jpg'
+        }
+      }
+    };
+    return _this;
   }
 
   _createClass(ProductPopup, [{
+    key: 'renderUpvoteButton',
+    value: function renderUpvoteButton() {
+      return _react2.default.createElement(
+        'a',
+        { className: 'upvote-button', href: '#' },
+        _react2.default.createElement(
+          'span',
+          null,
+          _react2.default.createElement('i', { className: 'fa fa-sort-asc' })
+        ),
+        this.state.product.upvote
+      );
+    }
+  }, {
+    key: 'renderHeader',
+    value: function renderHeader() {
+      return _react2.default.createElement(
+        'header',
+        { style: { backgroundImage: 'url(' + this.state.product.media + ')' } },
+        _react2.default.createElement(
+          'section',
+          { className: 'header-shadow' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            this.state.product.name
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            this.state.product.description
+          ),
+          _react2.default.createElement(
+            'section',
+            null,
+            this.renderUpvoteButton(),
+            _react2.default.createElement(
+              'a',
+              { className: 'getit-btn', href: this.state.product.link, target: '_blank' },
+              'Get it'
+            )
+          )
+        )
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         _Popup2.default,
         _extends({}, this.props, { style: 'product-popup' }),
-        _react2.default.createElement(
-          'h2',
-          null,
-          'Product Info'
-        )
+        this.renderHeader()
       );
     }
   }]);
