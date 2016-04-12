@@ -1,17 +1,10 @@
 import React from 'react';
 import Popup from './Popup';
-import Firebase from 'firebase';
+import Actions from '../../actions';
 
 class LoginPopup extends React.Component {
   handleLogin = () => {
-    var firebaseRef = new Firebase('https://productpounce.firebaseio.com');
-    firebaseRef.authWithOAuthPopup("facebook", (error, user) => {
-      if (error) {
-        console.log('Failed', error);
-      } else {
-        console.log('Login successfully', user);
-      }
-    })
+    Actions.login();
   };
   render() {
     return (
