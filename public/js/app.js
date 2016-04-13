@@ -21254,12 +21254,18 @@ var Actions = function () {
     value: function login() {
       return function (dispatch) {
         var firebaseRef = new _firebase2.default('https://productpounce.firebaseio.com');
-        firebaseRef.authWithOAuthPopup("facebook", function (error, user) {
+        firebaseRef.authWithOAuthPopup("facebook", function (error, authData) {
           if (error) {
             return;
-          } else {
-            dispatch(user);
           }
+
+          var user = {
+            id: authData.facebook.id,
+            name: authData.facebook.displayName,
+            avatar: authData.facebook.profileImageURL
+          };
+          firebaseRef.child("users").child(authData.facebook.id).set(user);
+          dispatch(user);
         });
       };
     }
@@ -21417,6 +21423,7 @@ var LoginPopup = function (_React$Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(LoginPopup)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleLogin = function () {
       _actions2.default.login();
+      _this.props.hidePopup();
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -21748,7 +21755,7 @@ var ProfileMenu = function (_React$Component) {
       return _react2.default.createElement(
         "section",
         { className: "profile-menu" },
-        _react2.default.createElement("img", { src: "/img/phil.jpg", onClick: this.handleClick, className: "profile-btn medium-avatar", ref: "profileBtn" }),
+        _react2.default.createElement("img", { src: this.props.user.avatar, onClick: this.handleClick, className: "profile-btn medium-avatar", ref: "profileBtn" }),
         this.state.showProfileNav ? this.renderProfileNav() : null
       );
     }
@@ -21851,7 +21858,7 @@ var Navbar = function (_React$Component) {
               { href: '#', onClick: this.showPopup, className: 'login-btn' },
               'Post'
             ),
-            _react2.default.createElement(_ProfileMenu2.default, null)
+            _react2.default.createElement(_ProfileMenu2.default, { user: this.props.user })
           ),
           _react2.default.createElement(_PostPopup2.default, { status: this.state.popupStatus, hidePopup: this.hidePopup })
         ) : _react2.default.createElement(

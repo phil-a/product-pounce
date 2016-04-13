@@ -5,12 +5,18 @@ class Actions {
   login() {
     return (dispatch) => {
       var firebaseRef = new Firebase('https://productpounce.firebaseio.com');
-      firebaseRef.authWithOAuthPopup("facebook", (error, user) => {
+      firebaseRef.authWithOAuthPopup("facebook", (error, authData) => {
         if (error) {
           return;
-        } else {
-          dispatch(user);
         }
+
+        var user = {
+          id: authData.facebook.id,
+          name: authData.facebook.displayName,
+          avatar: authData.facebook.profileImageURL
+        }
+        firebaseRef.child("users").child(authData.facebook.id).set(user);
+        dispatch(user);
       });
     }
   }
