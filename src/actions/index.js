@@ -48,6 +48,16 @@ class Actions {
     }
   }
 
+  getProducts() {
+    return(dispatch) => {
+      var firebaseRef = new Firebase('https://productpounce.firebaseio.com/products');
+      firebaseRef.on('value', (snapshot) => {
+        var products = snapshot.val();
+        dispatch(products);
+      });
+    }
+  }
+
 }
 
 export default alt.createActions(Actions);
