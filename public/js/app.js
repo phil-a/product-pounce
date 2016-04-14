@@ -37498,7 +37498,7 @@ var HomePage = (0, _connectToStores2.default)(_class = function (_React$Componen
 
 exports.default = HomePage;
 
-},{"../../actions":177,"../../stores/ProductStore":189,"../Product/ProductList":186,"alt-utils/lib/connectToStores":1,"firebase":39,"react":175}],180:[function(require,module,exports){
+},{"../../actions":177,"../../stores/ProductStore":190,"../Product/ProductList":186,"alt-utils/lib/connectToStores":1,"firebase":39,"react":175}],180:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38055,8 +38055,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class;
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -38065,17 +38063,9 @@ var _ProductPopup = require('./ProductPopup');
 
 var _ProductPopup2 = _interopRequireDefault(_ProductPopup);
 
-var _actions = require('../../actions');
+var _Upvote = require('./Upvote');
 
-var _actions2 = _interopRequireDefault(_actions);
-
-var _connectToStores = require('alt-utils/lib/connectToStores');
-
-var _connectToStores2 = _interopRequireDefault(_connectToStores);
-
-var _ProductStore = require('../../stores/ProductStore');
-
-var _ProductStore2 = _interopRequireDefault(_ProductStore);
+var _Upvote2 = _interopRequireDefault(_Upvote);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38085,7 +38075,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ProductItem = (0, _connectToStores2.default)(_class = function (_React$Component) {
+var ProductItem = function (_React$Component) {
   _inherits(ProductItem, _React$Component);
 
   function ProductItem() {
@@ -38101,10 +38091,6 @@ var ProductItem = (0, _connectToStores2.default)(_class = function (_React$Compo
       _this.setState({ productPopupStatus: false });
     };
 
-    _this.handleVote = function () {
-      _actions2.default.addVote(_this.props.pid, _this.props.user.id);
-    };
-
     _this.state = {
       productPopupStatus: false
     };
@@ -38112,20 +38098,6 @@ var ProductItem = (0, _connectToStores2.default)(_class = function (_React$Compo
   }
 
   _createClass(ProductItem, [{
-    key: 'renderUpvoteButton',
-    value: function renderUpvoteButton() {
-      return _react2.default.createElement(
-        'a',
-        { className: 'upvote-button', href: '#', onClick: this.handleVote },
-        _react2.default.createElement(
-          'span',
-          null,
-          _react2.default.createElement('i', { className: 'fa fa-sort-asc' })
-        ),
-        this.props.upvote
-      );
-    }
-  }, {
     key: 'renderNewWindowIcon',
     value: function renderNewWindowIcon() {
       return _react2.default.createElement(
@@ -38171,31 +38143,21 @@ var ProductItem = (0, _connectToStores2.default)(_class = function (_React$Compo
       return _react2.default.createElement(
         'li',
         { className: 'product-item' },
-        this.renderUpvoteButton(),
+        _react2.default.createElement(_Upvote2.default, this.props),
         _react2.default.createElement('img', { className: 'product-item-media', src: this.props.media }),
         this.renderInfoSession(),
         this.renderNewWindowIcon(),
         _react2.default.createElement(_ProductPopup2.default, _extends({}, this.props, { status: this.state.productPopupStatus, hidePopup: this.hideProductPopup }))
       );
     }
-  }], [{
-    key: 'getStores',
-    value: function getStores() {
-      return [_ProductStore2.default];
-    }
-  }, {
-    key: 'getPropsFromStores',
-    value: function getPropsFromStores() {
-      return _ProductStore2.default.getState();
-    }
   }]);
 
   return ProductItem;
-}(_react2.default.Component)) || _class;
+}(_react2.default.Component);
 
 exports.default = ProductItem;
 
-},{"../../actions":177,"../../stores/ProductStore":189,"./ProductPopup":187,"alt-utils/lib/connectToStores":1,"react":175}],186:[function(require,module,exports){
+},{"./ProductPopup":187,"./Upvote":188,"react":175}],186:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38268,6 +38230,10 @@ var _Popup = require('../Navbar/Popup');
 
 var _Popup2 = _interopRequireDefault(_Popup);
 
+var _Upvote = require('./Upvote');
+
+var _Upvote2 = _interopRequireDefault(_Upvote);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38299,20 +38265,6 @@ var ProductPopup = function (_React$Component) {
   }
 
   _createClass(ProductPopup, [{
-    key: 'renderUpvoteButton',
-    value: function renderUpvoteButton() {
-      return _react2.default.createElement(
-        'a',
-        { className: 'upvote-button', href: '#' },
-        _react2.default.createElement(
-          'span',
-          null,
-          _react2.default.createElement('i', { className: 'fa fa-sort-asc' })
-        ),
-        this.props.upvote
-      );
-    }
-  }, {
     key: 'renderHeader',
     value: function renderHeader() {
       return _react2.default.createElement(
@@ -38334,7 +38286,7 @@ var ProductPopup = function (_React$Component) {
           _react2.default.createElement(
             'section',
             null,
-            this.renderUpvoteButton(),
+            _react2.default.createElement(_Upvote2.default, this.props),
             _react2.default.createElement(
               'a',
               { className: 'getit-btn', href: this.props.link, target: '_blank' },
@@ -38423,7 +38375,92 @@ var ProductPopup = function (_React$Component) {
 
 exports.default = ProductPopup;
 
-},{"../Navbar/Popup":181,"react":175}],188:[function(require,module,exports){
+},{"../Navbar/Popup":181,"./Upvote":188,"react":175}],188:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _class;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _actions = require('../../actions');
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _connectToStores = require('alt-utils/lib/connectToStores');
+
+var _connectToStores2 = _interopRequireDefault(_connectToStores);
+
+var _ProductStore = require('../../stores/ProductStore');
+
+var _ProductStore2 = _interopRequireDefault(_ProductStore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Upvote = (0, _connectToStores2.default)(_class = function (_React$Component) {
+  _inherits(Upvote, _React$Component);
+
+  function Upvote() {
+    var _Object$getPrototypeO;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Upvote);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Upvote)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleVote = function () {
+      _actions2.default.addVote(_this.props.pid, _this.props.user.id);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Upvote, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'a',
+        { className: 'upvote-button', href: '#', onClick: this.handleVote },
+        _react2.default.createElement(
+          'span',
+          null,
+          _react2.default.createElement('i', { className: 'fa fa-sort-asc' })
+        ),
+        this.props.upvote
+      );
+    }
+  }], [{
+    key: 'getStores',
+    value: function getStores() {
+      return [_ProductStore2.default];
+    }
+  }, {
+    key: 'getPropsFromStores',
+    value: function getPropsFromStores() {
+      return _ProductStore2.default.getState();
+    }
+  }]);
+
+  return Upvote;
+}(_react2.default.Component)) || _class;
+
+exports.default = Upvote;
+
+},{"../../actions":177,"../../stores/ProductStore":190,"alt-utils/lib/connectToStores":1,"react":175}],189:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -38505,7 +38542,7 @@ var App = (0, _connectToStores2.default)(_class = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
 
-},{"../actions":177,"../stores/ProductStore":189,"./HomePage":179,"./Navbar":184,"alt-utils/lib/connectToStores":1,"react":175,"react-dom":46}],189:[function(require,module,exports){
+},{"../actions":177,"../stores/ProductStore":190,"./HomePage":179,"./Navbar":184,"alt-utils/lib/connectToStores":1,"react":175,"react-dom":46}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38585,4 +38622,4 @@ var ProductStore = (_dec = (0, _decorators.decorate)(_alt2.default), _dec2 = (0,
 }(), (_applyDecoratedDescriptor(_class2.prototype, 'setUser', [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, 'setUser'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'getProducts', [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'getProducts'), _class2.prototype)), _class2)) || _class);
 exports.default = _alt2.default.createStore(ProductStore);
 
-},{"../actions":177,"../alt":178,"alt-utils/lib/decorators":2}]},{},[188]);
+},{"../actions":177,"../alt":178,"alt-utils/lib/decorators":2}]},{},[189]);
