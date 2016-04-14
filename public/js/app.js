@@ -37361,13 +37361,20 @@ var Actions = function () {
     value: function addVote(productId, userId) {
       return function (dispatch) {
         var firebaseRef = new _firebase2.default('https://productpounce.firebaseio.com');
-        firebaseRef = firebaseRef.child('products').child(productId).child('upvote');
+        var voteRef = firebaseRef.child('votes').child(productId).child(userId);
+        voteRef.on('value', function (snapshot) {
+          if (snapshot.val() == null) {
+            voteRef.set(true);
 
-        var vote = 0;
-        firebaseRef.on('value', function (snapshot) {
-          vote = snapshot.val();
+            firebaseRef = firebaseRef.child('products').child(productId).child('upvote');
+
+            var vote = 0;
+            firebaseRef.on('value', function (snapshot) {
+              vote = snapshot.val();
+            });
+            firebaseRef.set(vote + 1);
+          }
         });
-        firebaseRef.set(vote + 1);
       };
     }
   }]);
@@ -38093,7 +38100,7 @@ var ProductItem = (0, _connectToStores2.default)(_class = function (_React$Compo
     };
 
     _this.handleVote = function () {
-      _actions2.default.addVote(_this.props.pid, _this.props.user);
+      _actions2.default.addVote(_this.props.pid, _this.props.user.id);
     };
 
     _this.state = {

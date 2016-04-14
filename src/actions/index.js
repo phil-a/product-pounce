@@ -75,13 +75,20 @@ class Actions {
   addVote(productId, userId) {
     return (dispatch) => {
       var firebaseRef = new Firebase('https://productpounce.firebaseio.com');
-      firebaseRef = firebaseRef.child('products').child(productId).child('upvote');
+      var voteRef = firebaseRef.child('votes').child(productId).child(userId);
+      voteRef.on('value', (snapshot) => {
+        if (snapshot.val() == null) {
+          voteRef.set(true);
 
-      var vote = 0;
-      firebaseRef.on('value', (snapshot) => {
-        vote = snapshot.val();
+          firebaseRef = firebaseRef.child('products').child(productId).child('upvote');
+
+          var vote = 0;
+          firebaseRef.on('value', (snapshot) => {
+            vote = snapshot.val();
+          });
+          firebaseRef.set(vote+1);
+        }
       });
-      firebaseRef.set(vote+1);
     }
   }
 
