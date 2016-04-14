@@ -5,18 +5,6 @@ class ProductPopup extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: {
-        id: 1,
-        name: "CodeLoads",
-        link: "https://codeloads.com",
-        media: "/img/codeacademy.jpeg",
-        upvote: 169,
-        description: "A load of code",
-        maker: {
-          name: 'phil',
-          avatar: '/img/phil.jpg'
-        }
-      },
       comments: [
         {
           name: "Phil",
@@ -38,20 +26,20 @@ class ProductPopup extends React.Component {
         <span>
           <i className="fa fa-sort-asc"></i>
         </span>
-        {this.state.product.upvote}
+        {this.props.upvote}
       </a>
     );
   }
 
   renderHeader(){
     return(
-      <header style={{backgroundImage: 'url(' + this.state.product.media + ')'}}>
+      <header style={{backgroundImage: 'url(' + this.props.media + ')'}}>
         <section className="header-shadow">
-          <h1>{this.state.product.name}</h1>
-          <p>{this.state.product.description}</p>
+          <h1>{this.props.name}</h1>
+          <p>{this.props.description}</p>
           <section>
             {this.renderUpvoteButton()}
-            <a className="getit-btn" href={this.state.product.link} target="_blank">Get it</a>
+            <a className="getit-btn" href={this.props.link} target="_blank">Get it</a>
           </section>
         </section>
 
