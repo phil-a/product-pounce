@@ -9,10 +9,6 @@ import ProductStore from '../../stores/ProductStore';
 class ProductPopup extends React.Component {
   constructor() {
     super();
-    this.state = {
-      comments: [
-      ]
-    }
   }
 
   static getStores() {
@@ -23,6 +19,12 @@ class ProductPopup extends React.Component {
     return ProductStore.getState();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.status && this.props.status != nextProps.status) {
+      Actions.getComments(this.props.pid);
+    }
+    return true;
+  }
 
   renderHeader(){
     return(
@@ -82,25 +84,25 @@ class ProductPopup extends React.Component {
     );
   }
 
-renderComments() {
-  return (
-    <ul className="comment-list">
-      {
-        this.state.comments.map(function(comment, idx) {
-          return (
-            <li key={idx}>
-              <img className="medium-avatar" src={comment.avatar} />
-              <section>
-                <strong>{comment.name}</strong>
-                <p>{comment.content}</p>
-              </section>
-            </li>
-          );
-        })
-      }
-    </ul>
-  );
-}
+  renderComments() {
+    return (
+      <ul className="comment-list">
+        {
+          this.props.comments.map(function(comment, idx) {
+            return (
+              <li key={idx}>
+                <img className="medium-avatar" src={comment.avatar} />
+                <section>
+                  <strong>{comment.name}</strong>
+                  <p>{comment.content}</p>
+                </section>
+              </li>
+            );
+          })
+        }
+      </ul>
+    );
+  }
 
   render() {
     return (
