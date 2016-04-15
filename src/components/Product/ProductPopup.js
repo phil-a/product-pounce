@@ -1,26 +1,27 @@
 import React from 'react';
 import Popup from '../Navbar/Popup';
 import Upvote from './Upvote';
+import Actions from '../../actions';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import ProductStore from '../../stores/ProductStore';
 
+@connectToStores
 class ProductPopup extends React.Component {
   constructor() {
     super();
     this.state = {
       comments: [
-        {
-          name: "Phil",
-          avatar: "/img/phil.jpg",
-          content: "I love this product"
-        },
-        {
-          name: "Mel",
-          avatar: "/img/mel.jpg",
-          content: "Me too!"
-        }
       ]
     }
   }
 
+  static getStores() {
+    return [ProductStore];
+  }
+
+  static getPropsFromStores() {
+    return ProductStore.getState();
+  }
 
 
   renderHeader(){
@@ -39,14 +40,33 @@ class ProductPopup extends React.Component {
     );
   }
 
+  handleComment = (e) => {
+    if (e.keyCode === 13 && e.target.value.length > 0) {
+      var comment = {
+        content: e.target.value,
+        name: this.props.user.name,
+        avatar: this.props.user.avatar
+      }
+      Actions.addComment(this.props.pid, comment);
+      e.target.value = null;
+    }
+  };
+
   renderBodyDiscussion() {
     return (
       <section className="discussion">
         <h2>Discussion</h2>
-        <section className="post-comment">
-          <img className="medium-avatar" src="/img/phil.jpg"/>
-          <input placeholder="What do you think of this product?" />
-        </section>
+        {
+          this.props.user
+          ?
+          <section className="post-comment">
+            <img className="medium-avatar" src={this.props.user.avatar}/>
+            <input placeholder="What do you think of this product?" onKeyUp={this.handleComment} />
+          </section>
+          :
+          null
+        }
+
         {this.renderComments()}
       </section>
     );
